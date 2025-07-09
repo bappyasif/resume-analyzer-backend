@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GEMINI_FLASH2_0_LITE_API_KEY;
+// const apiKey = process.env.GEMINI_FLASH2_0_LITE_API_KEY;
+const apiKey = process.env.GEMINI_FLASH_1_5_FLASH_LITE_API_KEY;
 
 if (!apiKey) {
     console.error("CRITICAL: GEMINI_FLASH2_0_API_KEY is not set. Ensure .env.local is loaded in index.ts.");
