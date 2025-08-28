@@ -1,32 +1,14 @@
-import express, { Request, Response } from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { geminiResumePromptForExtraction, geminiResumePromptForFeedback } from '../prompts';
+import express, { Request } from 'express';
+import { geminiResumePromptForExtraction } from '../prompts';
 import { model } from '../utils/genAi';
 
 const router = express.Router();
-// const genAI = new GoogleGenerativeAI(process.env.GEMINI_FLASH2_0_LITE_API_KEY!);
-// const genAI = new GoogleGenerativeAI(process.env.GEMINI_FLASH2_0_API_KEY!);
-// const genAI = new GoogleGenerativeAI("AIza.............................");
 
-// const model = genAI.getGenerativeModel({ 
-//     // model: 'gemini-flash2.0-lite' 
-//     model: 'gemini-2.0-flash-lite'
-//     // model: "gemini-2.0-flash",
-// });
+router.post('/', async (req: Request, res: any) => {
+    if (!model) {
+        return res.status(500).json({ error: "Gemini model is not available." });
+    }
 
-// const apiKey = process.env.GEMINI_FLASH2_0_LITE_API_KEY;
-
-// if (!apiKey) {
-//     console.error("CRITICAL: GEMINI_FLASH2_0_API_KEY is not set. Ensure .env.local is loaded in index.ts.");
-//     // You might want to prevent the route from being set up or throw an error
-//     // that stops the server if the API key is essential for this module.
-// }
-
-// // Initialize genAI only if apiKey is available
-// const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
-// const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' }) : null;
-
-router.post('/', async (req: any, res: any) => {
     try {
         const { text, role } = req.body;
 
@@ -56,8 +38,6 @@ router.post('/', async (req: any, res: any) => {
         }
 
         const parsedOutput = JSON.parse(cleanedJsonString);
-
-        console.log("Parsed Output:", parsedOutput?.name, parsedOutput?.output);
 
         res.json({ ...parsedOutput });
     } catch (error) {
