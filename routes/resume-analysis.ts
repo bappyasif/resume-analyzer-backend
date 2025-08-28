@@ -34,6 +34,9 @@ router.post('/', async (req: any, res: any) => {
 
         if (!text) return res.status(400).json({ error: "No resume text provided." });
 
+        console.log("Role:", role);
+        // console.log("Text:", text);
+
         const prompt = geminiResumePromptForExtraction(text, role);
 
         const result = await model?.generateContent(prompt);
