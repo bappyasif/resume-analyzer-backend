@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// const apiKey = process.env.GEMINI_FLASH2_0_LITE_API_KEY;
 const apiKey = process.env.GEMINI_FLASH_1_5_FLASH_LITE_API_KEY;
 
 if (!apiKey) {
@@ -11,6 +10,8 @@ if (!apiKey) {
 
 // Initialize genAI only if apiKey is available
 const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
+
+// Initialize model only if genAI is available
 const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' }) : null;
 
 export { genAI, model };

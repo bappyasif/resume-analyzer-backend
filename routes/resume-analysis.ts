@@ -19,6 +19,7 @@ router.post('/', async (req: Request, res: any) => {
         const prompt = geminiResumePromptForExtraction(text, role);
 
         const result = await model?.generateContent(prompt);
+
         const responseText = result?.response.text();
 
         if (!result || !responseText) {
@@ -28,6 +29,7 @@ router.post('/', async (req: Request, res: any) => {
 
         // Clean the responseText to remove potential markdown code block fences
         let cleanedJsonString = responseText;
+        
         const jsonBlockMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/);
 
         if (jsonBlockMatch && jsonBlockMatch[1]) {
