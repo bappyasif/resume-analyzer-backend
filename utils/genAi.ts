@@ -9,11 +9,18 @@ const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 const genAI = ai ? {
   getGenerativeModel: ({ model }: { model: string }) => {
     // FORCE-MIGRATE outdated 1.5 and 2.0 endpoints to the stable 2.5 baseline
+    // const normalizedModel = (
+    //   model.includes("gemini-1.5") || 
+    //   model.includes("gemini-2.0") || 
+    //   model === "gemini-pro"
+    // ) ? "gemini-2.5-flash" : model;
+    // gemini-2.5-flash-lite
+    // gemini-1.5-flash-8b
     const normalizedModel = (
       model.includes("gemini-1.5") || 
       model.includes("gemini-2.0") || 
       model === "gemini-pro"
-    ) ? "gemini-2.5-flash" : model; 
+    ) ? "gemini-2.5-flash-lite" : model; 
 
     return {
       generateContent: async (contents: any) => {
@@ -40,9 +47,13 @@ const genAI = ai ? {
 } : null;
 
 // 3. Fallback safely if initialization runs globally during startup
-const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }) : null;
+// const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }) : null;
 
-console.log("🚀 GenAI legacy wrapper updated: Automatically upgrading all 1.5 endpoints to 2.5-flash.");
+// const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' }) : null;
+
+const model = genAI ? genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' }) : null;
+
+console.log("🚀 GenAI legacy wrapper updated");
 
 export { genAI, model };
 
